@@ -1,0 +1,29 @@
+{
+    "name": "ts-deboucing-results",
+    "version": "0.1.0",
+    "homepage": "https://github.com/GiuseppeMP/debouncing-results",
+    "author": "giuseppemath@gmail.com",
+    "type": "amd",
+    "license": "ISC",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "description": "ts-deboucing-results is a TypeScript library that applies debouncing principles to ensure response stability and consistency. It waits for the result to remain unchanged for a specified period before returning, providing a reliable and consistent output for your applications.",
+    "files": [
+        "/build"
+    ],
+    "scripts": {
+        "test": "npx jest",
+        "compile": "npx tsc"
+    },
+    "dependencies": {
+        "@types/node": "^22.2.0",
+        "nanoid": "^5.0.7",
+    },
+    "devDependencies": {
+        "typescript": "~4.5",
+        "@jest/globals": "^29.7.0",
+        "@types/jest": "^29.5.12",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.2.4"
+    }
+}
