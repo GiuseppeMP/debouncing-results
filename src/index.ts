@@ -1,1 +1,1 @@
-export * from './debouncingResults.ts'
+export * from './debouncingResults'
