@@ -1,6 +1,6 @@
 {
     "name": "ts-deboucing-results",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "homepage": "https://github.com/GiuseppeMP/debouncing-results",
     "author": "giuseppemath@gmail.com",
     "type": "amd",
@@ -19,6 +19,7 @@
         "@types/node": "^22.2.0",
         "@types/underscore": "^1.11.15",
         "nanoid": "^5.0.7",
+        "tslib": "^2.7.0",
         "underscore": "^1.13.7"
     },
     "devDependencies": {

@@ -22,7 +22,7 @@
         "inlineSourceMap": true,
         "outDir": "./build",
         "removeComments": true,
-        //"importHelpers": true,
+        "importHelpers": true,
         "inlineSources": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
