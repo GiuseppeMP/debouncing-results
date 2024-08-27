@@ -1,8 +1,8 @@
 import _ from "underscore";
 
 export class DeboucingConfig {
-    debounceLimit: number = 10;
-    debounceIntervalMs: number = 3000;
+    debounceLimit: number = 3;
+    debounceIntervalMs: number = 2 * 1000;
     timeoutMs: number = 30 * 1000;
 }
 

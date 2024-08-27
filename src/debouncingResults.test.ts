@@ -1,4 +1,14 @@
+import _ from 'underscore'
 import { DeboucingConfig, deboucingResults } from './debouncingResults'
+
+describe('Testing DebouncingConfig', () => {
+    it('should have default values', () => {
+        const config = new DeboucingConfig()
+        expect(config.debounceLimit).toEqual(3)
+        expect(config.debounceIntervalMs).toEqual(2 * 1000)
+        expect(config.timeoutMs).toEqual(30 * 1000)
+    })
+})
 
 describe('Testing debouncingResults function with numbers.', () => {
     it('should debounce correctly four times and return 1.', async () => {
@@ -9,6 +19,17 @@ describe('Testing debouncingResults function with numbers.', () => {
             timeoutMs: 40000,
         }
         const actual = await deboucingResults(config, generateRandomNumbers)
+        expect(actual).toEqual(1)
+    })
+    it('should debounce correctly three times and return 1 using custom matcher.', async () => {
+        const generateRandomNumbers = () => Math.floor(Math.random() * 1) + 1
+        const matcher = (n: any, prev: any) => n === prev
+        const config: DeboucingConfig = {
+            debounceLimit: 3,
+            debounceIntervalMs: 2000,
+            timeoutMs: 40000,
+        }
+        const actual = await deboucingResults(config, generateRandomNumbers, matcher)
         expect(actual).toEqual(1)
     })
     it('should return the last value when a timeout occurs.', async () => {
