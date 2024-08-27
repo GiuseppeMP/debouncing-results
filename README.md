@@ -1,4 +1,5 @@
 <h1 align="center">Welcome to Deboucing Results! 👐</h1>
+
 The `ts-deboucing-results` is a library that applies debouncing principles to ensure response stability and consistency.  
 
 It waits for the result to remain unchanged for a specified period before returning, then you can safely assume that the result is
@@ -33,11 +34,14 @@ Promise<any[]>
 ```
 
 **debounceLimit**: how many times the function should be called before returning.  
+
 **debounceIntervalMs**: how many milliseconds the function should wait before calling it again.  
+
 **timeoutMs**: how long the deboucing function should wait before timing out.  
 
 **func**: the function to be debounced. It should return a promise that resolves to the result of the function call.  
-**customMatcher**: an optional function that can be used to determine if the result is unchanged. If the function returns true, the result will not be debounced. internally use `_.isEqual` from `underscore`.
+
+**customMatcher**: an optional function that can be used to determine if the result is unchanged. Internally use `_.isEqual` from `underscore` to compare the results.
 
 ## Install
 
@@ -51,7 +55,11 @@ npm i ts-deboucing-results
 import { DeboucingConfig, deboucingResults } from 'ts-deboucing-results'
 ```
 
-**Testing Example**  
+
+### **Testing Example**  
+
+In this example, every time you call the input function, it executes a pop in the results list. It only returns when the result is the same 3 times (debounceLimit).
+
 ```js 
     it('should debounce correctly 3 times and return 5.', async () => {
         const results = [5, 5, 5, 1, 1]
@@ -66,5 +74,33 @@ import { DeboucingConfig, deboucingResults } from 'ts-deboucing-results'
     })
 ```
 
+And if you change the debounceLimit to 2 the return should be 1:
+
+```js
+    it('should debounce correctly 2 times and return 1.', async () => {
+        const results = [5, 5, 5, 1, 1]
+        const inputFunction = () => results.pop()
+        const config: DeboucingConfig = {
+            debounceLimit: 2,
+            debounceIntervalMs: 2000,
+            timeoutMs: 40000,
+        }
+        const actual = await deboucingResults(config, inputFunction)
+        expect(actual).toEqual(1)
+    })
+```
 
 
+### **Real scenarios**
+
+In this example, the axios.get will execute until its result remains the same for 3 consecutive times due to `debounceLimit: 3`. If this does not happen, it will return the last result obtained before the timeout.
+
+```js
+        const apiCall = async () => axios.get(...)
+        const config: DeboucingConfig = {
+            debounceLimit: 3,
+            debounceIntervalMs: 2000,
+            timeoutMs: 40000,
+        }
+        const data = await deboucingResults(config, apiCall)
+```

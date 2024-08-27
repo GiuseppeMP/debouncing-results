@@ -21,6 +21,17 @@ describe('Testing debouncingResults function with numbers.', () => {
         const actual = await deboucingResults(config, generateRandomNumbers)
         expect(actual).toEqual(1)
     })
+    it('should debounce correctly 2 times and return 1.', async () => {
+        const results = [5, 5, 5, 1, 1]
+        const inputFunction = () => results.pop()
+        const config: DeboucingConfig = {
+            debounceLimit: 2,
+            debounceIntervalMs: 2000,
+            timeoutMs: 40000,
+        }
+        const actual = await deboucingResults(config, inputFunction)
+        expect(actual).toEqual(1)
+    })
     it('should debounce correctly 3 times and return 5.', async () => {
         const results = [5, 5, 5, 1, 1]
         const inputFunction = () => results.pop()
