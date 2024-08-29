@@ -26,6 +26,12 @@ go.work.sum
 
 .local-pack
 build
+dist
+reports
+report
 node_modules
 typescript/coverage
 coverage
+
+# stryker temp files
+.stryker-tmp

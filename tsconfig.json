@@ -4,6 +4,7 @@
     ],
     "exclude": [
         "dist/**/*",
+        ".stryker-tmp/**/*",
         "build/**/*",
         "test/**/*",
         "**/*.spec.ts",
@@ -11,21 +12,29 @@
         "node_modules/**/*"
     ],
     "compilerOptions": {
-        "target": "es2021",
+        "noEmit": false,
+        "noImplicitReturns": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "declaration": true,
+        "paths": {
+            "~/*": [
+                "./src/*"
+            ]
+        },
+        "target": "es6",
+        "module": "commonjs",
         "lib": [
             "esnext"
         ],
-        "module": "amd",
+        "baseUrl": "./",
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "strict": true,
         "moduleResolution": "node",
-        "declaration": true,
-        "inlineSourceMap": true,
-        "outDir": "./build",
+        "skipLibCheck": true,
         "removeComments": true,
         "importHelpers": true,
-        "inlineSources": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "skipLibCheck": true
+        "forceConsistentCasingInFileNames": true
     }
 }

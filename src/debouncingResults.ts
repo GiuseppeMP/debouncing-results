@@ -16,10 +16,9 @@ export class DeboucingConfig {
  * @returns A Promise that resolves to an array of results from the function calls.
  */
 
-export async function deboucingResults(config: DeboucingConfig, func: Function, customMatcher?: Function): Promise<any[]> {
+export async function deboucingResults(config: DeboucingConfig, func: Function, customMatcher?: Function): Promise<{ result: any, retries: number, allResults: any }> {
     let { debounceLimit: debounceEnd, debounceIntervalMs, timeoutMs } = config
     let results = []
-    let resultsStillDifferent = true
     let retries = 0
     let debCounter = 1
 
@@ -32,6 +31,7 @@ export async function deboucingResults(config: DeboucingConfig, func: Function, 
         }
 
         if (results.length > 1) {
+            let resultsStillDifferent: boolean;
 
             if (customMatcher !== undefined) {
                 resultsStillDifferent = !customMatcher(results[results.length - 1], results[results.length - 2])
@@ -51,7 +51,7 @@ export async function deboucingResults(config: DeboucingConfig, func: Function, 
 
         retries++
     }
-    return results.pop()
+    return { result: results[results.length - 1], retries: retries, allResults: results };
 }
 
 /**

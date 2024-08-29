@@ -19,7 +19,7 @@ describe('Testing debouncingResults function with numbers.', () => {
             timeoutMs: 40000,
         }
         const actual = await deboucingResults(config, generateRandomNumbers)
-        expect(actual).toEqual(1)
+        expect(actual.result).toEqual(1)
     })
     it('should debounce correctly three times and return 1 using custom matcher.', async () => {
         const generateRandomNumbers = () => Math.floor(Math.random() * 1) + 1
@@ -30,7 +30,7 @@ describe('Testing debouncingResults function with numbers.', () => {
             timeoutMs: 40000,
         }
         const actual = await deboucingResults(config, generateRandomNumbers, matcher)
-        expect(actual).toEqual(1)
+        expect(actual.result).toEqual(1)
     })
     it('should return the last value when a timeout occurs.', async () => {
         const generateRandomNumbers = () => Math.floor(Math.random() * 1) + 1
@@ -40,7 +40,7 @@ describe('Testing debouncingResults function with numbers.', () => {
             timeoutMs: 2000,
         }
         const actual = await deboucingResults(config, generateRandomNumbers)
-        expect(actual).toEqual(1)
+        expect(actual.result).toEqual(1)
     })
     it('should debounce correctly 2 times and return 1.', async () => {
         const results = [5, 5, 5, 1, 1]
@@ -51,7 +51,10 @@ describe('Testing debouncingResults function with numbers.', () => {
             timeoutMs: 40000,
         }
         const actual = await deboucingResults(config, inputFunction)
-        expect(actual).toEqual(1)
+        expect(actual.result).toEqual(1)
+        expect(actual.allResults).toHaveLength(2)
+        expect(actual.allResults).toStrictEqual([1, 1])
+        expect(actual.retries).toEqual(2)
     })
     it('should debounce correctly 3 times and return 5.', async () => {
         const results = [5, 5, 5, 1, 1]
@@ -62,7 +65,10 @@ describe('Testing debouncingResults function with numbers.', () => {
             timeoutMs: 40000,
         }
         const actual = await deboucingResults(config, inputFunction)
-        expect(actual).toEqual(5)
+        expect(actual.result).toEqual(5)
+        expect(actual.allResults).toHaveLength(5)
+        expect(actual.allResults).toStrictEqual([1, 1, 5, 5, 5])
+        expect(actual.retries).toEqual(5)
     })
 })
 
@@ -76,7 +82,7 @@ describe('Testing debouncingResults function with strings.', () => {
             timeoutMs: 40000,
         }
         const actual = await deboucingResults(config, inputFunction)
-        expect(actual).toEqual('abc')
+        expect(actual.result).toEqual('abc')
     })
 })
 
@@ -90,6 +96,6 @@ describe('Testing debouncingResults function with random types.', () => {
             timeoutMs: 40000,
         }
         const actual = await deboucingResults(config, inputFunction)
-        expect(actual).toEqual('abc')
+        expect(actual.result).toEqual('abc')
     })
 })
